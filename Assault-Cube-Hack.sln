@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assault-Cube-Hack", "Assault-Cube-Hack.csproj", "{F265A632-9634-4D03-ADDC-F3543C73EAFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F265A632-9634-4D03-ADDC-F3543C73EAFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F265A632-9634-4D03-ADDC-F3543C73EAFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F265A632-9634-4D03-ADDC-F3543C73EAFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F265A632-9634-4D03-ADDC-F3543C73EAFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4AB4008-814F-417C-9B69-FCE6E87B1D43}
+	EndGlobalSection
+EndGlobal
