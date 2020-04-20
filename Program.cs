@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+//using System.Windows;
 
 namespace Assault_Cube_Hack
 {
@@ -6,7 +9,9 @@ namespace Assault_Cube_Hack
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            MemoryMan mm = new MemoryMan();
+
+            Console.WriteLine(mm.ToString());
         }
     }
 }
