@@ -8,7 +8,7 @@ using System.Threading;
 namespace Assault_Cube_Hack
 {
     [SuppressUnmanagedCodeSecurity]
-    class MemoryMan
+    class Memory
     {
         [DllImport("ntdll")]
         private static extern bool NtReadVirtualMemory(
@@ -26,9 +26,9 @@ namespace Assault_Cube_Hack
             int NumberOfBytesToWrite,
             int NumberOfBytesWritten);
 
-        private readonly IntPtr processHandle; 
+        protected readonly IntPtr processHandle;
 
-        public MemoryMan(IntPtr processHandle) => this.processHandle = processHandle;
+        public Memory(IntPtr processHandle) => this.processHandle = processHandle;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe T Read<T>(IntPtr address) where T : struct
