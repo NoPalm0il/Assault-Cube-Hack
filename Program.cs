@@ -29,14 +29,7 @@ namespace Assault_Cube_Hack
             }
 
             ConsoleCLI conscli = new ConsoleCLI(pc.Handle);
-            /*
-            off.localPlayer = mm.Read<int>((IntPtr)(off.baseAddress + off.offsetLocalPlayer));
-
-
-            mm.Write((IntPtr)(baseLP + off.m_Health), 1337);
-            mm.Write((IntPtr)(baseLP + off.m_Flashbangs), 69);
-            Console.WriteLine("r");
-        */
+            conscli.startCli();
         }
     }
 }
