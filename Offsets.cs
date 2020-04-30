@@ -11,10 +11,14 @@ namespace Assault_Cube_Hack
         public Int32 baseAddress { get; }
         public Int32 offsetLocalPlayer  {get;}
         public Int32 localPlayer { get; set; }
-
+        public Int32 teamOffset1 { get; }
+        public Int32 teamOffset2 { get; }
         public Int32 m_XPos  {get;}
         public Int32 m_YPos  {get;}
         public Int32 m_ZPos  {get;}
+
+        public Int32 m_ViewAngleX { get; }
+        public Int32 m_ViewAngleY { get; }
 
         public Int32 m_isPosMoving  {get;}
         public Int32 m_Speed  {get;}
@@ -23,7 +27,7 @@ namespace Assault_Cube_Hack
         public Int32 m_AmmoMags  {get;}
         public Int32 m_Ammo  {get;}
         public Int32 m_SecAmmo  {get;}
-        public Int32 m_Flashbangs  {get;}
+        public Int32 m_Grenades  {get;}
         public Int32 m_WeaponTimer  {get;}
         public Int32 m_ShotsFired  {get;}
 
@@ -71,9 +75,15 @@ namespace Assault_Cube_Hack
             offsetLocalPlayer = 0x10F4F4;
             localPlayer = 0;
 
+            teamOffset1 = 0x204;
+            teamOffset2 = 0x32C;
+
             m_XPos = 0x38;
             m_YPos = 0x3C;
             m_ZPos = 0x40;
+
+            m_ViewAngleX = 0x40;
+            m_ViewAngleY = 0x44;
 
             m_isPosMoving = 0x70;
             m_Speed = 0x80;
@@ -82,7 +92,7 @@ namespace Assault_Cube_Hack
             m_AmmoMags = 0x128;
             m_Ammo = 0x150;
             m_SecAmmo = 0x13C;
-            m_Flashbangs = 0x158;
+            m_Grenades = 0x158;
             m_WeaponTimer = 0x178;
             m_ShotsFired = 0x1A0;
 
