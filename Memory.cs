@@ -46,7 +46,7 @@ namespace Assault_Cube_Hack
             byte[] buffer = new byte[Unsafe.SizeOf<T>()];
 
             fixed (byte* b = buffer)
-                Unsafe.Write<T>(b, value);
+                Unsafe.Write(b, value);
 
             return NtWriteVirtualMemory(processHandle, address, buffer, buffer.Length, 0);
         }

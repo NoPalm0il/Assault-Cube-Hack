@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Threading;
 
 namespace Assault_Cube_Hack
@@ -6,22 +7,38 @@ namespace Assault_Cube_Hack
     class ConsoleCLI : Memory
     {
         public Offsets off { get; set; }
+        private ArrayList hacks { get; set; }
+        private ArrayList commands { get; set; }
 
-        private bool ammobool { get; set; }
-        private bool gmbool { get; set; }
-        private bool hvhbool { get; set; }
-        private bool wallsbool { get; set; }
-        private bool aimbotbool { get; set; }
+        private Hack hvh { get; set; }
+        private Hack ammo { get; set; }
+        private Hack godMode { get; set; }
+        private Hack walls { get; set; }
+        private Hack aimbot { get; set; }
 
         public ConsoleCLI(IntPtr processHandle) : base(processHandle)
         {
             off = new Offsets();
+            //maybe delete hacks
+            hacks = new ArrayList();
+            commands = new ArrayList();
 
-            ammobool = false;
-            gmbool = false;
-            hvhbool = false;
-            wallsbool = false;
-            aimbotbool = false;
+            hvh = new Hack("hvh");
+            ammo = new Hack("ammo");
+            godMode = new Hack("godMode");
+            walls = new Hack("walls");
+            aimbot = new Hack("aimbot");
+
+            hacks.Add(hvh);
+            hacks.Add(ammo);
+            hacks.Add(new Hack("godMode"));
+            hacks.Add(walls);
+            hacks.Add(aimbot);
+
+            commands.Add("help");
+            commands.Add("clear");
+            commands.Add("start");
+            commands.Add("exit");
         }
 
         public void startCli()
@@ -33,38 +50,42 @@ namespace Assault_Cube_Hack
 
                 string cmd = Console.ReadLine();
 
-                //TODO: foreach searching the commands struct if the input matches the struct
-                switch (cmd)
+                if (commands.Contains(cmd))
                 {
-                    case "help":
-                        showHelp();
-                        break;
-                    case "clear":
-                        Console.Clear();
-                        break;
-                    case "start":
-                        startHackCli();
-                        break;
-                    case "hacks":
-                        showHacks();
-                        break;
-                    case "exit":
-                        Environment.Exit(1);
-                        break;
-                    default:
-                        break;
+                    switch (cmd)
+                    {
+                        case "help":
+                            showHelp();
+                            break;
+                        case "clear":
+                            Console.Clear();
+                            break;
+                        case "start":
+                            startHackCli();
+                            break;
+                        case "exit":
+                            Environment.Exit(1);
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else
+                    Console.WriteLine("Incorrect command");
             }
         }
 
         private void startHackCli()
         {
+            off.localPlayer = Read<int>((IntPtr)(off.baseAddress + off.offsetLocalPlayer));
+
             Console.Clear();
 
-            off.localPlayer = Read<int>((IntPtr)(off.baseAddress + off.offsetLocalPlayer));
             bool leave = false;
+
             while (true)
             {
+                hacksStatus();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("AChackerinos ");
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -73,56 +94,60 @@ namespace Assault_Cube_Hack
                 Console.Write("> ");
 
                 string cmd = Console.ReadLine();
-                //TODO: foreach searching the commands struct if the input matches the struct
-                switch (cmd)
+
+                if (hacks.Contains(cmd))
                 {
-                    case "hvh":
-                        if (!hvhbool) {
-                            hvhbool = true;
-                            ThreadPool.QueueUserWorkItem(runHvh);
-                        }
-                        else 
-                            hvhbool = false;
-                        break;
-                    case "walls":
-                        ThreadPool.QueueUserWorkItem(runWalls);
-                        break;
-                    case "aimbot":
-                        ThreadPool.QueueUserWorkItem(runAimbot);
-                        break;
-                    case "godMode":
-                        if (!gmbool)
-                        {
-                            gmbool = true;
-                            ThreadPool.QueueUserWorkItem(runGodMode);
-                        }
-                        else
-                            gmbool = false;
-                        break;
-                    case "ammo":
-                        if (!ammobool)
-                        {
-                            ammobool = true;
-                            ThreadPool.QueueUserWorkItem(runAmmo);
-                        }
-                        else
-                            ammobool = false;
-                        break;
-                    case "help":
-                        showHelp();
-                        break;
-                    case "clear":
-                        Console.Clear();
-                        break;
-                    case "hacks":
-                        showHacks();
-                        break;
-                    case "exit":
-                        leave = true;
-                        break;
-                    default:
-                        break;
+                    switch (cmd)
+                    {
+                        case "hvh":
+                            //if (!hvhbool)
+                            //{
+                            //    //hacks.BinarySearch("hvh") = true;
+                            //    ThreadPool.QueueUserWorkItem(runHvh);
+                            //}
+                            //else
+                            //    hvhbool = false;
+                            break;
+                        case "walls":
+                            ThreadPool.QueueUserWorkItem(runWalls);
+                            break;
+                        case "aimbot":
+                            ThreadPool.QueueUserWorkItem(runAimbot);
+                            break;
+                        case "godMode":
+                            //maybe static would be more efficient
+                            if (!((Hack)hacks[hacks.IndexOf(new Hack("hvh"))]).isActive)
+                            {
+                                ((Hack)hacks[hacks.IndexOf(new Hack("hvh"))]).isActive = true;
+                                ThreadPool.QueueUserWorkItem(runGodMode);
+                            }
+                            else
+                                ((Hack)hacks[hacks.IndexOf(new Hack("hvh"))]).isActive = false;
+                            break;
+                        case "ammo":
+                            //if (!ammobool)
+                            //{
+                            //    ammobool = true;
+                            //    ThreadPool.QueueUserWorkItem(runAmmo);
+                            //}
+                            //else
+                            //    ammobool = false;
+                            break;
+                        case "help":
+                            showHelp();
+                            break;
+                        case "clear":
+                            Console.Clear();
+                            break;
+                        case "exit":
+                            leave = true;
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else
+                    Console.WriteLine("Enter a correct command");
                 if (leave)
                     break;
             }
@@ -133,14 +158,24 @@ namespace Assault_Cube_Hack
             Console.WriteLine("Help...");
         }
 
-        private void showHacks()
+        private void hacksStatus()
         {
-            Console.WriteLine("Hacks...");
+            //do single hack object, more dynamic
+            foreach (string item in hacks)
+            {
+                if(true)//TODO
+                Console.Write(item);
+            }
+
+
+            Console.WriteLine("");
         }
 
         private void runGodMode(object state)
         {
-            while (gmbool)
+            //maybe static is more efficient
+            //while(hack.isActive)
+            while (true)
             {
                 Write((IntPtr)(off.localPlayer + off.m_Health), 1337);
                 Thread.Sleep(400);
@@ -155,7 +190,7 @@ namespace Assault_Cube_Hack
 
         private void runHvh(object state)
         {
-            while (hvhbool)
+            while (true)
             {
 
             }
@@ -163,7 +198,7 @@ namespace Assault_Cube_Hack
 
         private void runAmmo(object state)
         {
-            while (ammobool)
+            while (true)
             {
                 Write((IntPtr)(off.localPlayer + off.m_Ammo), 69);
                 //Write((IntPtr)(off.localPlayer + off.m_AmmoMags), 69);
