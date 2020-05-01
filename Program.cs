@@ -11,13 +11,12 @@ namespace Assault_Cube_Hack
     {
         static void Main(string[] args)
         {
-            Process[] prcarr = Process.GetProcessesByName("ac_client");
             Process pc;
-
             while (true)
             {
                 try
                 {
+                    Process[] prcarr = Process.GetProcessesByName("ac_client");
                     pc = prcarr[0];
                     break;
                 }
