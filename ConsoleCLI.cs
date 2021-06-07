@@ -247,7 +247,7 @@ namespace Assault_Cube_Hack
         {
             while (walls.isActive)
             {
-
+                //Do wallhack
             }
 
         }
@@ -256,7 +256,7 @@ namespace Assault_Cube_Hack
         {
             while (aimbot.isActive)
             {
-
+                //Do Aimbot
             }
         }
     }
